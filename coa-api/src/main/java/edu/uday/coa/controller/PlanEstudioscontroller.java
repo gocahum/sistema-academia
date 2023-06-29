@@ -30,6 +30,19 @@ public class PlanEstudioscontroller {
         }
     }
 
+    @GetMapping(value = ("/{licenciatura-id}"))
+    public ResponseEntity<?> findByLicenciaturaId(@PathVariable(value = "licenciatura-id") long licenciatruaId){
+        try {
+            return ResponseEntity.ok().body(planEstudiosService.getLicienciatruaMaterias(licenciatruaId));
+        }catch (COAException ex){
+            log.warn("Sin datos");
+            log.error(ex);
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @PostMapping
     public ResponseEntity createPlanEstudios(@RequestBody PlanEstudio planEstudio){
         try {

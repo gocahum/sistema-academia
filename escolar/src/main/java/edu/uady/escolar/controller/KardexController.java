@@ -31,6 +31,21 @@ public class KardexController {
         }
     }
 
+    @GetMapping(value = "/{matricula}")
+    public ResponseEntity<?> findByKardexByAlumno(@PathVariable("matricula") String matricula) {
+        try {
+            return ResponseEntity.ok().body(kardexService.findByKardexByAlumno(matricula));
+        }catch (ControlEscolarException ex){
+            log.warn("Sin datos");
+            log.error(ex);
+            return new ResponseEntity<>("datos no encontrados", HttpStatus.OK);
+        } catch (Exception e) {
+            log.error(e);
+            throw new RuntimeException(e);
+        }
+    }
+
+
     @PostMapping
     public Kardex createKardex(@RequestBody Kardex kardex){
         log.info("Kardex  a guardar: "+kardex.toString());

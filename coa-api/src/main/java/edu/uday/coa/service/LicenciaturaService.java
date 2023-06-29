@@ -1,5 +1,6 @@
 package edu.uday.coa.service;
 
+import edu.uday.coa.dto.LicenciaturaMateriaDTO;
 import edu.uday.coa.entity.Licenciatura;
 import edu.uday.coa.error.COAException;
 import edu.uday.coa.repository.LicenciaturaRepository;
@@ -37,6 +38,8 @@ public class LicenciaturaService {
         }
         return Licenciaturaes;
     }
+
+
 
     public void deleteLicenciatura(Long id) {
         licenciaturaRepository.deleteById(id);
