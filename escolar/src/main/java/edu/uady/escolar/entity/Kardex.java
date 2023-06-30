@@ -15,8 +15,8 @@ public class Kardex {
     private Long id;
     @Column(name ="folio")
     private String folioKardex;
-    @Column(name = "materia_id", nullable = false, precision = 30)
-    private Long materia;
+    @Column(name = "clave_materia", nullable = false, precision = 30)
+    private String claveMateria;
     @Column(name = "calificacion", nullable = false, precision = 6)
     private Double calificacion;
     @ManyToOne

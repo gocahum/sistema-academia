@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service	
 @Log4j2
 public class PlanEstudiosService {
     @Autowired
@@ -55,20 +55,23 @@ public class PlanEstudiosService {
 
     public LicenciaturaMateriaDTO getLicienciatruaMaterias (Long licenciaturaId)throws  Exception{
         List<PlanEstudio> planEstudios = planEstudioRepository.findPlanEstudioByLicenciatura_Id(licenciaturaId);
-        log.info(planEstudios.toString());
-        LicenciaturaMateriaDTO dto = new LicenciaturaMateriaDTO();
-        dto.setLicenciatura(planEstudios.get(0).getLicenciatura().getNombre());
-        List<MateriaDTO> materiasDto = new ArrayList<>();
-        planEstudios.stream().forEach(pe ->{
-            MateriaDTO materia = new MateriaDTO();
-            materia.setClaveMateria(pe.getMateria().getClaveMateria());
-            materia.setMateria(pe.getMateria().getNombreMateria());
-            materia.setSemestre(pe.getSemestre());
-            materia.setCreditos(pe.getCreditos());
-            materiasDto.add(materia);
-        });
-        dto.setMaterias(materiasDto);
-        return dto;
+        if(!planEstudios.isEmpty()) {
+        	log.info(planEstudios.toString());
+            LicenciaturaMateriaDTO dto = new LicenciaturaMateriaDTO();
+            dto.setLicenciatura(planEstudios.get(0).getLicenciatura().getNombre());
+            List<MateriaDTO> materiasDto = new ArrayList<>();
+            planEstudios.stream().forEach(pe ->{
+                MateriaDTO materia = new MateriaDTO();
+                materia.setClaveMateria(pe.getMateria().getClaveMateria());
+                materia.setMateria(pe.getMateria().getNombreMateria());
+                materia.setSemestre(pe.getSemestre());
+                materia.setCreditos(pe.getCreditos());
+                materiasDto.add(materia);
+            });
+            dto.setMaterias(materiasDto);
+            return dto;
+        }
+       throw new COAException("No hay un plan de estudios con ese Identificador");
     }
 
     public void deletePlanEstudio(Long id){

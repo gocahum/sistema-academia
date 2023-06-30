@@ -38,7 +38,7 @@ public class KardexController {
         }catch (ControlEscolarException ex){
             log.warn("Sin datos");
             log.error(ex);
-            return new ResponseEntity<>("datos no encontrados", HttpStatus.OK);
+            return new ResponseEntity<>("datos no encontrados", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             log.error(e);
             throw new RuntimeException(e);

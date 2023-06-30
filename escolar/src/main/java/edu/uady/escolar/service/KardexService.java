@@ -43,6 +43,9 @@ public class KardexService {
 
     public KardexAlumno findByKardexByAlumno(String matricula) throws Exception{
         List<Kardex> kardex = kardexRepository.findAllByAlumno_Matricula(matricula);
+        if(kardex.isEmpty()) {
+        	throw new ControlEscolarException("No existe un alumno con esa matricula");
+        }
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         HttpEntity entity = new HttpEntity(headers);
@@ -50,22 +53,25 @@ public class KardexService {
                         +kardex.get(0).getAlumno().getLicenciaturaId(),
                 HttpMethod.GET, entity, LicenciaturaMateriaDTO.class);
         LicenciaturaMateriaDTO ResponseDto = response.getBody();
-        log.info("Consumo endpompont desde Control Escolar");
-        log.info(ResponseDto);
-        KardexAlumno kardexAlumno = new KardexAlumno();
-        kardexAlumno.setNombreCompleto(kardex.get(0).getAlumno().getNombre()+" "+kardex.get(0).getAlumno().getApellidos());
-        kardexAlumno.setFolio(kardex.get(0).getFolioKardex());
-        kardexAlumno.setLicenciatrua(ResponseDto.getLicenciatura());
-        List<MateriasKardex> materiasKardexes = new ArrayList<>();
-        ResponseDto.getMaterias().stream().forEach(dto ->{
-            MateriasKardex materiasKardex = new MateriasKardex();
-            materiasKardex.setMateria(dto.getMateria());
-            materiasKardex.setSemestre(dto.getSemestre());
-            materiasKardex.setClaveMateria(dto.getClaveMateria());
-            materiasKardexes.add(materiasKardex);
-        });
-        kardexAlumno.setMateriasKardex(materiasKardexes);
-        return kardexAlumno;
+        if(!ResponseDto.getLicenciatura().isEmpty()) {
+        	log.info("Consumo endpompont desde Control Escolar");
+            log.info(ResponseDto);
+            KardexAlumno kardexAlumno = new KardexAlumno();
+            kardexAlumno.setNombreCompleto(kardex.get(0).getAlumno().getNombre()+" "+kardex.get(0).getAlumno().getApellidos());
+            kardexAlumno.setFolio(kardex.get(0).getFolioKardex());
+            kardexAlumno.setLicenciatrua(ResponseDto.getLicenciatura());
+            List<MateriasKardex> materiasKardexes = new ArrayList<>();
+            ResponseDto.getMaterias().stream().forEach(dto ->{
+                MateriasKardex materiasKardex = new MateriasKardex();
+                materiasKardex.setMateria(dto.getMateria());
+                materiasKardex.setSemestre(dto.getSemestre());
+                materiasKardex.setClaveMateria(dto.getClaveMateria());
+                materiasKardexes.add(materiasKardex);
+            });
+            kardexAlumno.setMateriasKardex(materiasKardexes);
+            return kardexAlumno;
+        }
+        throw new ControlEscolarException("No se encontraton datos");
     }
 
     public void deleteKardex(Long id){
