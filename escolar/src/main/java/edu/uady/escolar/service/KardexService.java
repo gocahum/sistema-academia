@@ -10,6 +10,7 @@ import edu.uady.escolar.repository.KardexRepository;
 import edu.uady.escolar.repository.KardexRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -20,6 +21,8 @@ import java.util.List;
 @Service
 @Log4j2
 public class KardexService {
+    @Autowired
+    private Environment env;
     @Autowired
     private KardexRepository kardexRepository;
 
@@ -46,7 +49,7 @@ public class KardexService {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         HttpEntity entity = new HttpEntity(headers);
-        ResponseEntity<LicenciaturaMateriaDTO> response = restTemplate.exchange("http://localhost:8090/coa-api/plan-estudios/"
+        ResponseEntity<LicenciaturaMateriaDTO> response = restTemplate.exchange(env.getProperty("URL_COA")+"/plan-estudios/"
                         +kardex.get(0).getAlumno().getLicenciaturaId(),
                 HttpMethod.GET, entity, LicenciaturaMateriaDTO.class);
         LicenciaturaMateriaDTO ResponseDto = response.getBody();
