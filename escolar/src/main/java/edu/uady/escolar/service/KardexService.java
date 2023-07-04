@@ -1,5 +1,6 @@
 package edu.uady.escolar.service;
 
+import edu.uady.escolar.client.IPlanEstudiosClient;
 import edu.uady.escolar.dto.KardexAlumno;
 import edu.uady.escolar.dto.MateriasKardex;
 import edu.uady.escolar.dto.client.LicenciaturaMateriaDTO;
@@ -26,6 +27,9 @@ public class KardexService {
     @Autowired
     private KardexRepository kardexRepository;
 
+    @Autowired(required=true)
+    private IPlanEstudiosClient planEstudiosClient;
+
     public Kardex createKardex(Kardex kardex){
         log.info("crea Kardex: "+kardex.toString());
         return kardexRepository.save(kardex);
@@ -49,10 +53,9 @@ public class KardexService {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         HttpEntity entity = new HttpEntity(headers);
-        ResponseEntity<LicenciaturaMateriaDTO> response = restTemplate.exchange(env.getProperty("URL_COA")+"/plan-estudios/"
-                        +kardex.get(0).getAlumno().getLicenciaturaId(),
-                HttpMethod.GET, entity, LicenciaturaMateriaDTO.class);
-        LicenciaturaMateriaDTO ResponseDto = response.getBody();
+        log.info("OpenFeign");
+        ResponseEntity<?> response =  planEstudiosClient.findByLicenciaturaId(kardex.get(0).getAlumno().getLicenciaturaId());
+        LicenciaturaMateriaDTO ResponseDto = (LicenciaturaMateriaDTO) response.getBody();
         log.info("Consumo endpompont desde Control Escolar");
         log.info(ResponseDto);
         KardexAlumno kardexAlumno = new KardexAlumno();

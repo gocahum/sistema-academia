@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: server-config
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/gocahum/sistema-academia.git
+          default-label: master
+          search-paths: config-data
+
+
+server:
+  port: 5051
+
+
+
+#logging.pattern.console="${LOG_LEVEL_PATTERN:%p} - %d{yyyy-MM-dd HH:mm:ss} - [%C{0}:%L] - %m%n"
