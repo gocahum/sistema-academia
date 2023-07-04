@@ -1,0 +1,15 @@
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      default-zone: http://${eureka.instance.hostname}:${server.port}/eureka
+  instance:
+    lease-expiration-duration-in-seconds: 5
+    lease-renewal-interval-in-seconds: 5
+spring:
+  application:
+    name: registry-service
+
+server:
+  port: 8761

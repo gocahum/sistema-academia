@@ -39,7 +39,8 @@ public class PlanEstudioscontroller {
             log.error(ex);
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+//            throw new RuntimeException(e);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
