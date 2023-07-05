@@ -54,7 +54,7 @@ public class KardexService {
         HttpHeaders headers = new HttpHeaders();
         HttpEntity entity = new HttpEntity(headers);
         log.info("OpenFeign");
-        ResponseEntity<?> response =  planEstudiosClient.findByLicenciaturaId(kardex.get(0).getAlumno().getLicenciaturaId());
+            ResponseEntity<?> response = planEstudiosClient.findByLicenciaturaId(kardex.get(0).getAlumno().getLicenciaturaId());
         LicenciaturaMateriaDTO ResponseDto = (LicenciaturaMateriaDTO) response.getBody();
         log.info("Consumo endpompont desde Control Escolar");
         log.info(ResponseDto);

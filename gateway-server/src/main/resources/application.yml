@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: get-coa
+          uri: lb://coa-api
+          predicates:
+            - Path=/coa-api/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: CortoCircuito
+                fallbackUri: forward:/error
+        - id: get-coe
+          uri: lb://coe
+          predicates:
+            - Path=/coe/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: CortoCircuito
+                fallbackUri: forward:/error
+server:
+  port: 9070
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
