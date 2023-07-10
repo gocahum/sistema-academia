@@ -18,8 +18,9 @@ public class CostoMateriaService {
     private CostoMateriaRepository costoMateriaRepository;
 
     public List<CostoMateria> getAllCostoMaterias() throws Exception {
+        log.info("getAllCostoMaterias");
         List<CostoMateria> costoMateriaList = costoMateriaRepository.findAll();
-
+        log.info("obtubo todas las materias");
         if (costoMateriaList.isEmpty()) {
             throw new COAException("No se encontraron datos");
         }

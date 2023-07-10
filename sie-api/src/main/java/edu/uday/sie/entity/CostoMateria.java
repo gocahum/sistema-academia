@@ -1,6 +1,6 @@
 package edu.uday.sie.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
