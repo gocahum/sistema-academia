@@ -24,7 +24,24 @@ spring:
           ssl:
             trust: "*"
         debug: true
+  kafka:
+    bootstrap-servers: localhost:9092
 
+  #security:
+   # user:
+    #  name: admin
+     # password: 123456
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: admin
+    password: 123456
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
 
 server:
   port: 6069

@@ -27,7 +27,15 @@ public class Controller {
     public ResponseEntity<?> receiveEmail(@RequestBody EmailDto emailDto) {
         log.info("Mensaje recibido:");
         log.info(emailDto.toString());
-        emailService.sendEmail(emailDto.getToUser(), emailDto.getSubject(), emailDto.getMessage());
+        //emailService.sendEmail(emailDto.getToUser(), emailDto.getSubject(), emailDto.getMessage());
+        return (ResponseEntity<?>) ResponseEntity.ok("mensaje enviado");
+    }
+
+    @GetMapping("/demo")
+    public ResponseEntity<?> GetSecurity() {
+        log.info("Mensaje recibido:");
+
+        //emailService.sendEmail(emailDto.getToUser(), emailDto.getSubject(), emailDto.getMessage());
         return (ResponseEntity<?>) ResponseEntity.ok("mensaje enviado");
     }
 
