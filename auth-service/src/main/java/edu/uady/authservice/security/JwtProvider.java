@@ -49,9 +49,9 @@ public class JwtProvider {
         } catch (Exception ex) {
             return false;
         }
-        if( !isAdmin(token) || !routeValidator.isAdminPath(requestDto)) {
-            return false;
-        }
+//        if( !isAdmin(token) || !routeValidator.isAdminPath(requestDto)) {
+//            return false;
+//        }
         return true;
     }
 

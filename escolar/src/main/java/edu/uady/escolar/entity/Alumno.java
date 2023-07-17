@@ -1,5 +1,6 @@
 package edu.uady.escolar.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,6 +26,7 @@ public class Alumno {
     @Column(name = "licenciatura_id")
     private Long licenciaturaId;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "alumno")
+    @JsonIgnore
     private List<Kardex> kardexs;
 
 }

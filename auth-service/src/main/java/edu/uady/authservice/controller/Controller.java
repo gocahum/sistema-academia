@@ -29,10 +29,12 @@ public class Controller {
 
     @PostMapping("/validate")
     public ResponseEntity<TokenDto> validate(@RequestParam String token, @RequestBody RequestDto requestDto){
+        log.info("Entra a validar token "+requestDto.toString());
         TokenDto tokenDto = userAuthService.validateToken(token, requestDto);
         if(tokenDto == null){
             return ResponseEntity.badRequest().build();
         }
+        log.info(tokenDto.getToken());
         return ResponseEntity.ok(tokenDto);
     }
 
